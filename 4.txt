@@ -1,0 +1,22 @@
+import numpy as np
+import matplotlib.pyplot as plt
+np.random.seed(0)
+X = 2 * np.random.rand(100, 1)
+y = 4 + 3 * X + np.random.randn(100, 1)
+def linear_regression(X, y, learning_rate=0.01, epochs=1000):
+ m, n = X.shape
+ X_b = np.c_[np.ones((m, 1)), X] # add bias term (x0 = 1)
+ theta = np.random.randn(n + 1, 1) # initialize weights randomly
+ for epoch in range(epochs):
+ 	gradients = 2/m * X_b.T.dot(X_b.dot(theta) - y)
+ 	theta -= learning_rate * gradients
+ return theta
+theta = linear_regression(X, y)
+plt.plot(X, y, "b.")
+plt.plot(X, theta[0] + theta[1] * X, "r-")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("Linear Regression with a Single Neuron Model")
+plt.show()
+print(f"Intercept (bias): {theta[0][0]}")
+print(f"Slope (weight): {theta[1][0]}")
